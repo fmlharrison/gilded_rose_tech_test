@@ -14,6 +14,10 @@ GildedRose.prototype.isBackstagePass = function (item) {
   return item.name === "Backstage passes to a TAFKAL80ETC concert";
 };
 
+GildedRose.prototype.isSulfuras = function (item) {
+  return item.name === "Sulfuras, Hand of Ragnaros";
+};
+
 GildedRose.prototype.isNormalItem = function (item) {
   return !this.isBrie(item) && !this.isBackstagePass(item);
 };
@@ -26,6 +30,10 @@ GildedRose.prototype.isNotMaxQuality = function (item) {
   return this._itemQuality(item) < 50;
 };
 
+GildedRose.prototype.isItemStillOk = function (item) {
+  return this._itemQuality(item) > 0;
+};
+
 GildedRose.prototype.update_quality = function () {
   for (var i = 0; i < this.items.length; i++) {
     if (this.isNormalItem(this.items[i])) {
@@ -35,7 +43,7 @@ GildedRose.prototype.update_quality = function () {
         }
       }
     } else {
-      if (this.items[i].quality < 50) {
+      if (this.isNotMaxQuality(this.items[i])) {
         this.items[i].quality = this.items[i].quality + 1
         if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
           if (this.items[i].sell_in < 11) {
@@ -44,7 +52,7 @@ GildedRose.prototype.update_quality = function () {
             }
           }
           if (this.items[i].sell_in < 6) {
-            if (this.items[i].quality < 50) {
+            if (this.isNotMaxQuality(this.items[i])) {
               this.items[i].quality = this.items[i].quality + 1
             }
           }
@@ -66,7 +74,7 @@ GildedRose.prototype.update_quality = function () {
           this.items[i].quality = this.items[i].quality - this.items[i].quality
         }
       } else {
-        if (this.items[i].quality < 50) {
+        if (this.isNotMaxQuality(this.items[i])) {
           this.items[i].quality = this.items[i].quality + 1
         }
       }

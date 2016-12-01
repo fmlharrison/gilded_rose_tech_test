@@ -147,6 +147,14 @@ describe("Gilded Rose", function() {
 
   });
 
+  describe("#isSulfuras", function () {
+    
+    it("Know is an item is a sulfuras", function () {
+      expect(gildedRose.isSulfuras(sulfuras)).toBeTruthy();
+    });
+
+  });
+
   describe("quality checking", function () {
 
     it("know the quality of the item", function () {
@@ -156,6 +164,10 @@ describe("Gilded Rose", function() {
     it("knows if the item has a quality value of under 50", function () {
       expect(gildedRose.isNotMaxQuality(item)).toBeTruthy();
     });
+
+    it("knows if the item is still good", function () {
+      expect(gildedRose.isItemStillOk(item)).toBeTruthy();
+    })
 
   });
 
