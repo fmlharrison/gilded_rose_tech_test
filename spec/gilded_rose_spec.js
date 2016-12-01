@@ -4,9 +4,13 @@ describe("Gilded Rose", function() {
   var brie;
   var backstage_pass;
   var sulfuras;
+  var brie_deluxe;
+  var old_item;
 
   beforeEach(function () {
     item = [ new Item("Mac'n'Cheese", 10, 20) ];
+    old_item = [new Item("Rottern Cabbage", -5, 0)]
+    brie_deluxe = [ new Item("Aged Brie", 10, 50)];
     brie = [ new Item("Aged Brie", 15, 10)];
     backstage_pass = [ new Item('Backstage passes to a TAFKAL80ETC concert', 9, 20)];
     sulfuras = [ new Item('Sulfuras, Hand of Ragnaros', 0, 80)];
@@ -22,6 +26,16 @@ describe("Gilded Rose", function() {
     it("should reduce the sell in value of an object", function () {
       update_quality(item);
       expect(item[0].sell_in).toEqual(9);
+    });
+
+    it("quality can't go higher than 50", function () {
+      update_quality(brie_deluxe);
+      expect(brie_deluxe[0].quality).toEqual(50);
+    });
+
+    it("quality can't go lower than 0", function () {
+      update_quality(old_item);
+      expect(old_item[0].quality).toEqual(0);
     });
 
   });
