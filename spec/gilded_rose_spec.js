@@ -8,7 +8,7 @@ describe("Gilded Rose", function() {
   var old_item;
 
   beforeEach(function () {
-    item = [ new Item("Mac'n'Cheese", 10, 20) ];
+    item = [ new Item("Mac'n'Cheese", 5, 20) ];
     old_item = [new Item("Rottern Cabbage", -5, 0)]
     brie_deluxe = [ new Item("Aged Brie", 10, 50)];
     brie = [ new Item("Aged Brie", 15, 10)];
@@ -25,7 +25,7 @@ describe("Gilded Rose", function() {
 
     it("should reduce the sell in value of an object", function () {
       update_quality(item);
-      expect(item[0].sell_in).toEqual(9);
+      expect(item[0].sell_in).toEqual(4);
     });
 
     it("quality can't go higher than 50", function () {
@@ -36,6 +36,13 @@ describe("Gilded Rose", function() {
     it("quality can't go lower than 0", function () {
       update_quality(old_item);
       expect(old_item[0].quality).toEqual(0);
+    });
+
+    it("quality reduces twice as fast after the sell_in date reaches 0", function () {
+      for (var i = 0; i < 7; i++) {
+        update_quality(item);
+      }
+      expect(item[0].quality).toEqual(11);
     });
 
   });
