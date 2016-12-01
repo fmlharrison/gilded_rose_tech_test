@@ -62,51 +62,60 @@ describe("Gilded Rose", function() {
 
   });
 
-  // describe("Special cases", function () {
-  //
-  //   it("should know that brie gets better with age", function () {
-  //     update_quality(brie);
-  //     expect(brie[0].quality).toEqual(11);
-  //   });
-  //
-  //   describe("back stage passes", function () {
-  //
-  //     it("increases in quality by 2 when there are 10 days left till sell in deadline", function () {
-  //       update_quality(backstage_pass);
-  //       expect(backstage_pass[0].quality).toEqual(22);
-  //     });
-  //
-  //     it("increases in quality by 3 when there are 5 days left till sell in deadline", function () {
-  //       for (var i = 0; i < 5; i++) {
-  //         update_quality(backstage_pass);
-  //       }
-  //       expect(backstage_pass[0].quality).toEqual(31);
-  //     });
-  //
-  //     it("looses all it's value after the sell in value reaches 0", function () {
-  //       for (var i = 0; i < 10; i++) {
-  //         update_quality(backstage_pass);
-  //       }
-  //       expect(backstage_pass[0].quality).toEqual(0);
-  //     });
-  //
-  //   });
-  //
-  //   describe("Sulfuras", function () {
-  //
-  //     it("doesn't decrease in value", function () {
-  //       update_quality(sulfuras);
-  //       expect(sulfuras[0].quality).toEqual(80);
-  //     });
-  //
-  //     it("doesn't have to be sold, it's everlasting", function () {
-  //       update_quality(sulfuras);
-  //       expect(sulfuras[0].sell_in).toEqual(0);
-  //     });
-  //
-  //   });
-  //
-  // });
+  describe("Special cases", function () {
+
+    it("should know that brie gets better with age", function () {
+      gildedRose.addItem(brie);
+      gildedRose.update_quality();
+      expect(gildedRose.items[0].quality).toEqual(11);
+    });
+
+    describe("back stage passes", function () {
+
+      beforeEach(function () {
+        gildedRose.addItem(backstage_pass);
+      });
+
+      it("increases in quality by 2 when there are 10 days left till sell in deadline", function () {
+        gildedRose.update_quality();
+        expect(gildedRose.items[0].quality).toEqual(22);
+      });
+
+      it("increases in quality by 3 when there are 5 days left till sell in deadline", function () {
+        for (var i = 0; i < 5; i++) {
+          gildedRose.update_quality();
+        }
+        expect(gildedRose.items[0].quality).toEqual(31);
+      });
+
+      it("looses all it's value after the sell in value reaches 0", function () {
+        for (var i = 0; i < 10; i++) {
+          gildedRose.update_quality();
+        }
+        expect(gildedRose.items[0].quality).toEqual(0);
+      });
+
+    });
+
+    describe("Sulfuras", function () {
+
+      beforeEach(function () {
+        gildedRose.addItem(sulfuras);
+      });
+
+      it("doesn't decrease in value", function () {
+        gildedRose.update_quality();
+        expect(gildedRose.items[0].quality).toEqual(80);
+      });
+
+      it("doesn't have to be sold, it's everlasting", function () {
+        gildedRose.update_quality();
+        expect(gildedRose.items[0].sell_in).toEqual(0);
+      });
+
+    });
+
+  });
 
 
 });
