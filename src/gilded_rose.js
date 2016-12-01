@@ -14,9 +14,17 @@ GildedRose.prototype.isBackstagePass = function (item) {
   return item.name === "Backstage passes to a TAFKAL80ETC concert";
 };
 
+GildedRose.prototype.isNormalItem = function (item) {
+  return !this.isBrie(item) && !this.isBackstagePass(item);
+};
+
+GildedRose.prototype._itemQuality = function (item) {
+  return item.quality;
+};
+
 GildedRose.prototype.update_quality = function () {
   for (var i = 0; i < this.items.length; i++) {
-    if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
+    if (this.isNormalItem(this.items[i])) {
       if (this.items[i].quality > 0) {
         if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
           this.items[i].quality = this.items[i].quality - 1

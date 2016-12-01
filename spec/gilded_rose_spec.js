@@ -139,5 +139,21 @@ describe("Gilded Rose", function() {
     });
   });
 
+  describe("#isNormalItem", function () {
+
+    it("know if item is a not a brie or pass", function () {
+      expect(gildedRose.isNormalItem(item)).toBeTruthy();
+    });
+
+  });
+
+  describe("quality checking", function () {
+
+    it("know the quality of the item", function () {
+      expect(gildedRose._itemQuality(item)).toEqual(20);
+    });
+    
+  });
+
 
 });
