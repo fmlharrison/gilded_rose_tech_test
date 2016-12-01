@@ -3,11 +3,13 @@ describe("Gilded Rose", function() {
   var item;
   var brie;
   var backstage_pass;
+  var sulfuras;
 
   beforeEach(function () {
     item = [ new Item("Mac'n'Cheese", 10, 20) ];
     brie = [ new Item("Aged Brie", 15, 10)];
     backstage_pass = [ new Item('Backstage passes to a TAFKAL80ETC concert', 9, 20)];
+    sulfuras = [ new Item('Sulfuras, Hand of Ragnaros', 0, 80)];
   });
 
   describe("updating normal food quality", function () {
@@ -53,6 +55,16 @@ describe("Gilded Rose", function() {
       });
 
     });
+
+    describe("Sulfuras", function () {
+
+      it("doesn't decrease in value", function () {
+        update_quality(sulfuras);
+        expect(sulfuras[0].quality).toEqual(80);
+      })
+    })
+
+
 
   });
 
