@@ -139,18 +139,18 @@ describe("Gilded Rose", function() {
     });
   });
 
-  describe("#isNormalItem", function () {
+  describe("#isSulfuras", function () {
 
-    it("know if item is a not a brie or pass", function () {
-      expect(gildedRose.isNormalItem(item)).toBeTruthy();
+    it("Know is an item is a sulfuras", function () {
+      expect(gildedRose.isSulfuras(sulfuras)).toBeTruthy();
     });
 
   });
 
-  describe("#isSulfuras", function () {
-    
-    it("Know is an item is a sulfuras", function () {
-      expect(gildedRose.isSulfuras(sulfuras)).toBeTruthy();
+  describe("#isNormalItem", function () {
+
+    it("know if item is a not a brie, pass or sulfuras", function () {
+      expect(gildedRose.isNormalItem(item)).toBeTruthy();
     });
 
   });
@@ -167,8 +167,29 @@ describe("Gilded Rose", function() {
 
     it("knows if the item is still good", function () {
       expect(gildedRose.isItemStillOk(item)).toBeTruthy();
-    })
+    });
 
+  });
+
+  describe("the conditions", function () {
+
+    beforeEach(function () {
+      gildedRose.addItem(item);
+      gildedRose.addItem(old_item);
+    });
+
+    it("knows to reduce the sell_in and quality by 1 for normal(still good) item", function () {
+      gildedRose.newQuality();
+      expect(gildedRose.items[0].quality).toEqual(19);
+      expect(gildedRose.items[0].sell_in).toEqual(4);
+    });
+
+    it ("knows to reduce the quality by 2 when sell in value is 0 or less", function () {
+      for (var i = 1; i < 7; i++) {
+        gildedRose.newQuality();
+      }
+      expect(item.quality).toEqual(13);
+    });
   });
 
 
