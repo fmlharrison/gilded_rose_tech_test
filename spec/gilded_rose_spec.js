@@ -152,7 +152,11 @@ describe("Gilded Rose", function() {
     it("know the quality of the item", function () {
       expect(gildedRose._itemQuality(item)).toEqual(20);
     });
-    
+
+    it("knows if the item has a quality value of under 50", function () {
+      expect(gildedRose.isNotMaxQuality(item)).toBeTruthy();
+    });
+
   });
 
 

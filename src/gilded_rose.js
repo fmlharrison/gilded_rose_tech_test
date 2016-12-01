@@ -22,6 +22,10 @@ GildedRose.prototype._itemQuality = function (item) {
   return item.quality;
 };
 
+GildedRose.prototype.isNotMaxQuality = function (item) {
+  return this._itemQuality(item) < 50;
+};
+
 GildedRose.prototype.update_quality = function () {
   for (var i = 0; i < this.items.length; i++) {
     if (this.isNormalItem(this.items[i])) {
