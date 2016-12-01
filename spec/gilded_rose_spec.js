@@ -61,10 +61,14 @@ describe("Gilded Rose", function() {
       it("doesn't decrease in value", function () {
         update_quality(sulfuras);
         expect(sulfuras[0].quality).toEqual(80);
-      })
-    })
+      });
 
+      it("doesn't have to be sold, it's everlasting", function () {
+        update_quality(sulfuras);
+        expect(sulfuras[0].sell_in).toEqual(0);
+      });
 
+    });
 
   });
 
