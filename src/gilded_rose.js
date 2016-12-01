@@ -6,6 +6,14 @@ GildedRose.prototype.addItem= function (item) {
   this.items.push(item);
 };
 
+GildedRose.prototype.isBrie = function (item) {
+  return item.name === "Aged Brie";
+};
+
+GildedRose.prototype.isBackstagePass = function (item) {
+  return item.name === "Backstage passes to a TAFKAL80ETC concert";
+};
+
 GildedRose.prototype.update_quality = function () {
   for (var i = 0; i < this.items.length; i++) {
     if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {

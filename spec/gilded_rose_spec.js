@@ -117,5 +117,27 @@ describe("Gilded Rose", function() {
 
   });
 
+  describe("#isBrie", function () {
+
+    it("knows if the item is Aged Brie", function () {
+      expect(gildedRose.isBrie(brie)).toBeTruthy();
+    });
+
+    it("knows if the item is not Aged Brie", function () {
+      expect(gildedRose.isBrie(item)).toBeFalsy();
+    });
+  });
+
+  describe("#isBackstagePass", function () {
+
+    it("know if the item is a backstage pass", function () {
+      expect(gildedRose.isBackstagePass(backstage_pass)).toBeTruthy();
+    });
+
+    it("know if the item is not a backstage pass", function () {
+      expect(gildedRose.isBackstagePass(item)).toBeFalsy();
+    });
+  });
+
 
 });
