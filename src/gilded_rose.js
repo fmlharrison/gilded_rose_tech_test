@@ -29,12 +29,17 @@ GildedRose.prototype._itemQuality = function (item) {
 GildedRose.prototype.isNotMaxQuality = function (item) {
   return this._itemQuality(item) < 50;
 };
+
+GildedRose.prototype.isNotMinQuality = function (item) {
+  return this._itemQuality(item) > 0;
+};
+
 GildedRose.prototype._isPastSellIn = function (item) {
   return item.sell_in <= 0;
 };
 
 GildedRose.prototype.isItemStillOk = function (item) {
-  return this._itemQuality(item) > 0 && !this._isPastSellIn(item);
+  return this.isNotMinQuality(item) && !this._isPastSellIn(item);
 };
 
 GildedRose.prototype.normalGoodItem = function (item) {
@@ -42,7 +47,7 @@ GildedRose.prototype.normalGoodItem = function (item) {
 };
 
 GildedRose.prototype.offItem = function (item) {
-  return this.isNormalItem(item) && this._isPastSellIn(item);
+  return this.isNormalItem(item) && this._isPastSellIn(item) && this.isNotMinQuality(item);
 }
 
 GildedRose.prototype.normalDecay = function (item) {
@@ -61,6 +66,7 @@ GildedRose.prototype.newQuality = function () {
   for (var i = 0; i < this.items.length; i++) {
     if (this.normalGoodItem(this.items[i])) {this.normalDecay(this.items[i]);}
     if (this.offItem(this.items[i])) {this.doubleDecay(this.items[i]);}
+
     this.reduceSellIn(this.items[i]);
   }
 };

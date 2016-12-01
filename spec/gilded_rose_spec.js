@@ -190,6 +190,11 @@ describe("Gilded Rose", function() {
       }
       expect(item.quality).toEqual(13);
     });
+
+    it ("know quality can never be a negative", function () {
+      gildedRose.newQuality();
+      expect(old_item.quality).toEqual(0);
+    });
   });
 
 
