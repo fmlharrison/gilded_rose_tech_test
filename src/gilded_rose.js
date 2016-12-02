@@ -2,12 +2,22 @@ function GildedRose() {
   this.items = [];
 }
 
+GildedRose.prototype.newQuality = function () {
+  for (var i = 0; i < this.items.length; i++) {
+    if (this.normalGoodItem(this.items[i])) {this.normalDecay(this.items[i]);}
+    if (this.offItem(this.items[i])) {this.doubleDecay(this.items[i]);}
+    if (this.isBrie(this.items[i])) {this.addsValue(this.items[i]);}
+    if (this.isBackstagePass(this.items[i])) {this.passPrices(this.items[i]);}
+    this.reduceSellIn(this.items[i]);
+  }
+};
+
 GildedRose.prototype.addItem= function (item) {
   this.items.push(item);
 };
 
 GildedRose.prototype.isBrie = function (item) {
-  return item.name === "Aged Brie";
+  return item.name === "Aged Brie" && this.isNotMaxQuality(item);
 };
 
 GildedRose.prototype.isBackstagePass = function (item) {
@@ -34,6 +44,10 @@ GildedRose.prototype.isNotMinQuality = function (item) {
   return this._itemQuality(item) > 0;
 };
 
+GildedRose.prototype.sellInValue = function (item) {
+  return item.sell_in;
+};
+
 GildedRose.prototype._isPastSellIn = function (item) {
   return item.sell_in <= 0;
 };
@@ -58,63 +72,29 @@ GildedRose.prototype.doubleDecay = function (item) {
   item.quality = item.quality - 2;
 };
 
+GildedRose.prototype.addsValue = function (item) {
+  item.quality = item.quality + 1;
+};
+
+GildedRose.prototype.addsValue2 = function (item) {
+  item.quality = item.quality + 2;
+};
+
+GildedRose.prototype.addsValue3 = function (item) {
+  item.quality = item.quality + 3;
+};
+
+GildedRose.prototype.loseAllValue = function (item) {
+  item.quality = item.quality - item.quality;
+};
+
 GildedRose.prototype.reduceSellIn = function (item) {
   if (!this.isSulfuras(item)) {item.sell_in = item.sell_in - 1;}
 };
 
-GildedRose.prototype.newQuality = function () {
-  for (var i = 0; i < this.items.length; i++) {
-    if (this.normalGoodItem(this.items[i])) {this.normalDecay(this.items[i]);}
-    if (this.offItem(this.items[i])) {this.doubleDecay(this.items[i]);}
-
-    this.reduceSellIn(this.items[i]);
-  }
+GildedRose.prototype.passPrices = function (item) {
+  if (this.sellInValue(item) === 0) {this.loseAllValue(item);
+  } else if (this.sellInValue(item) <= 5) {this.addsValue3(item);
+  } else if (this.sellInValue(item) <= 10) {this.addsValue2(item);
+  } else if (this.sellInValue(item) > 10) {this.addsValue(item); }
 };
-
-GildedRose.prototype.update_quality = function () {
-  for (var i = 0; i < this.items.length; i++) {
-    if (this.isNormalItem(this.items[i])) {
-      if (this.items[i].quality > 0) {
-        if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          this.items[i].quality = this.items[i].quality - 1
-        }
-      }
-    } else {
-      if (this.isNotMaxQuality(this.items[i])) {
-        this.items[i].quality = this.items[i].quality + 1
-        if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-          if (this.items[i].sell_in < 11) {
-            if (this.items[i].quality < 50) {
-              this.items[i].quality = this.items[i].quality + 1
-            }
-          }
-          if (this.items[i].sell_in < 6) {
-            if (this.isNotMaxQuality(this.items[i])) {
-              this.items[i].quality = this.items[i].quality + 1
-            }
-          }
-        }
-      }
-    }
-    if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-      this.items[i].sell_in = this.items[i].sell_in - 1;
-    }
-    if (this.items[i].sell_in < 0) {
-      if (this.items[i].name != 'Aged Brie') {
-        if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (this.items[i].quality > 0) {
-            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-              this.items[i].quality = this.items[i].quality - 1
-            }
-          }
-        } else {
-          this.items[i].quality = this.items[i].quality - this.items[i].quality
-        }
-      } else {
-        if (this.isNotMaxQuality(this.items[i])) {
-          this.items[i].quality = this.items[i].quality + 1
-        }
-      }
-    }
-  }
-}
